@@ -16,7 +16,7 @@ def LiDAR(sx, eps=1e-7, delta=1e-3):
     eigvals_w, eigvecs_w = torch.linalg.eigh(S_w)
     eigvals_w = torch.clamp(eigvals_w, min=eps)
 
-    invsqrt_w = (eigvecs_w * (1. / torch.sqrt(eigvals_w))) @ eigvecs_w.transpose(-1, -2)
+    invsqrt_w = (eigvecs_w * (1. / torch.sqrt(eigvals_w))) @ eigvecs_w.transpose(-2,-1)
     S_lidar = invsqrt_w @ S_b @ invsqrt_w
     lam = torch.linalg.eigh(S_lidar)[0].clamp(min=0)
     p = lam / lam.sum() + eps
